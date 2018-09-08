@@ -1,0 +1,8 @@
+
+<div class="btn-group-vertical group-item-container">
+  <button type="button" class="btn btn-default group-item"
+          *ngFor="let group of groupService.list()"
+          (click)="selectItem(group);">
+    {{ group.title }}
+  </button>
+</div>

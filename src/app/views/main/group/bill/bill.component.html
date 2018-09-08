@@ -1,0 +1,9 @@
+
+<div *ngIf="isActive; else billTableRow">
+  <h3>{{ billService.retrieve(_billId).title }}</h3>
+  <h1>Amir</h1>
+</div>
+
+<ng-template #billTableRow>
+  <h3>{{ billService.retrieve(_billId).title }}</h3>
+</ng-template>
