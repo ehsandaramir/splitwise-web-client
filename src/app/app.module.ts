@@ -15,6 +15,9 @@ import { BillEditComponent } from './views/bill-edit/bill-edit.component';
 import { GroupEditComponent } from './views/group-edit/group-edit.component';
 import { ProfileComponent } from './views/profile/profile.component';
 import { InviteComponent } from './views/invite/invite.component';
+import {UserService} from './services/user.service';
+import {BillService} from './services/bill.service';
+import {GroupService} from './services/group.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,7 @@ import { InviteComponent } from './views/invite/invite.component';
     MatButtonModule,
     MatCheckboxModule
   ],
-  providers: [],
+  providers: [UserService, BillService, GroupService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -12,7 +12,7 @@ export class BillService {
       new DebtModel(2, 1.03),
       new DebtModel(1, 0.20),
     ]);
-    const bill2 = new BillModel(2, 'Dinner', 12.34, 1, [
+    const bill2 = new BillModel(2, 'Launch', 12.34, 1, [
       new PaymentModel(2, 12),
       new PaymentModel(1, 0.34)
     ], [

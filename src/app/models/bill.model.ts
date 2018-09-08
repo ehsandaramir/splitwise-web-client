@@ -9,7 +9,6 @@ export class BillModel {
   payments: PaymentModel[];
   debts: DebtModel[];
 
-
   constructor(id: number, title: string, amount: number, creator: number, payments: PaymentModel[], debts: DebtModel[]) {
     this.id = id;
     this.title = title;

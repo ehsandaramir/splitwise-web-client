@@ -1,23 +1,21 @@
 import {UserModel} from '../models/user.model';
 
 export class UserService {
-  users: UserModel[] = [];
+  users: {} = {};
+  public selectedUser: UserModel;
 
   constructor() {
-    const user1 = new UserModel(1, 'Amir', 'Ehsandar', 'ehsan@g.com');
-    const user2 = new UserModel(2, 'Gholi', 'Pour', 'gholi@g.com');
-
-    this.users.push(user1);
-    this.users.push(user2);
+    const user1 = new UserModel(1, 'ehsandaramir', 'Amir', 'Ehsandar', 'ehsan@g.com');
+    const user2 = new UserModel(2, 'gholipour', 'Gholi', 'Pour', 'gholi@g.com');
+    this.users[user1.id] = user1;
+    this.users[user2.id] = user2;
   }
 
   list() {
-    return this.users;
+    return Object.values(this.users);
   }
 
   retrieve(id: number) {
-    let target;
-    this.users.forEach(element => target = element.id === id ? element : null);
-    return target;
+    return this.users[id];
   }
 }

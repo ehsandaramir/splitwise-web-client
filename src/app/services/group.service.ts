@@ -2,6 +2,7 @@ import {GroupModel} from '../models/group.model';
 
 export class GroupService {
   groups: GroupModel[] = [];
+  public selectedGroup: GroupModel;
 
   constructor() {
     const group1 = new GroupModel(
