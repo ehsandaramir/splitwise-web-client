@@ -1,9 +1,89 @@
 
 <div *ngIf="isActive; else billTableRow">
-  <h3>{{ billService.retrieve(_billId).title }}</h3>
-  <h1>Amir</h1>
+
+  <div class="panel panel-default">
+
+    <div class="panel-heading">
+      <h3 class="app-theme">{{ currentBill.title }}</h3>
+      <h3 class="app-theme">{{ currentBill.amount }} {{ currentBill.unit }}</h3>
+      <h4>created by
+        <span class="app-user-username">{{ userService.retrieve(currentBill.creator).username }}</span> at
+        <span class="app-datetime">{{ getCreatedDate() }}</span>
+      </h4>
+    </div>
+
+    <div class="panel-body">
+
+      <h4>
+        PAYMENTS ({{ currentBill.getPaymentSum() }})
+        <a href="#" class="app-btn-badge">add</a>
+      </h4>
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <td>Paid by</td>
+          <td>Amount</td>
+          <td></td>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let item of currentBill.payments">
+          <td>{{ userService.retrieve(item.user).username }}</td>
+          <td>{{ item.amount }}</td>
+          <td>
+            <a href="#" class="app-btn-badge">remove</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <h4>DEBTS ({{ currentBill.getDebtSum() }})</h4>
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <td>Owed by</td>
+          <td>Amount</td>
+          <td></td>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let item of currentBill.debts">
+          <td>{{ userService.retrieve(item.user).username }}</td>
+          <td>{{ item.amount }}</td>
+          <td>
+            <a href="#" class="app-btn-badge">remove</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <div class="panel-footer">
+
+      <div class="btn-group">
+        <button type="button" class="btn btn-danger" (click)="onEditFinish('delete')" [disabled]="edit">
+          <i class="material-icons mat-icon">delete</i> Remove
+        </button>
+        <button type="button" class="btn btn-primary" (click)="onEditClick()" [disabled]="edit">
+          <i class="material-icons mat-icon">edit</i> Edit
+        </button>
+        <button type="button" class="btn btn-warning" (click)="onEditFinish('discard')" [disabled]="!edit">
+          <i class="material-icons mat-icon">refresh</i> Discard
+        </button>
+        <button type="button" class="btn btn-success" (click)="onEditFinish('save')" [disabled]="!edit">
+          <i class="material-icons mat-icon">save</i> Save
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
 
 <ng-template #billTableRow>
-  <h3>{{ billService.retrieve(_billId).title }}</h3>
+  <h3 class="app-theme">{{ billService.retrieve(_billId).title }}</h3>
 </ng-template>

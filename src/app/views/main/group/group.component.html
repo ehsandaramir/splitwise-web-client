@@ -8,7 +8,7 @@
   <tbody>
     <tr *ngFor="let bill of groupService.selectedGroup.bills" (click)="setActiveBill(bill)">
       <td>
-        <app-bill [billId]="bill" [isActive]="bill === activeBillId"></app-bill>
+        <app-bill [billId]="bill" [isActive]="bill === activeBillId" (reloadGroup)="onReloadBills()"></app-bill>
       </td>
     </tr>
   </tbody>

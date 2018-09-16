@@ -1,0 +1,97 @@
+
+<div class="container-fluid" style="height: 50px" *ngIf="errorText !== ''"></div>
+<div class="alert alert-danger" *ngIf="errorText !== ''">
+  <h4>{{ errorText }}</h4>
+</div>
+
+<div class="container-fluid" style="height: 50px"></div>
+
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-4 col-md-offset-4 col-xs-12">
+
+      <div *ngIf="authService.currentStatus === 'basic' && mode ==='login' && authService.inProgress === 0">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
+          <div class="form-group">
+            <label for="login-username">Username</label>
+            <input
+              type="text"
+              class="form-control"
+              [ngClass]="{'app-form-invalid-text': !loginForm.get(['username']).valid && loginForm.get(['username']).dirty}"
+              id="login-username"
+              formControlName="username"
+              [disabled]="formDisable">
+            <span class="help-block" *ngIf="!loginForm.get(['username']).valid && loginForm.get(['username']).dirty">
+          Please enter a valid username
+        </span>
+          </div>
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              [ngClass]="{'app-form-invalid-text': !loginForm.get(['password']).valid && loginForm.get(['password']).dirty}"
+              id="login-password"
+              formControlName="password"
+              [disabled]="formDisable">
+            <span class="help-block" *ngIf="!loginForm.get(['password']).valid && loginForm.get(['password']).dirty">
+          Please enter a valid password
+        </span>
+          </div>
+          <button type="submit" class="btn btn-success" [disabled]="!loginForm.valid || formDisable">Login</button>
+        </form>
+      </div>
+
+      <div *ngIf="authService.currentStatus === 'basic' && mode==='signup' && authService.inProgress === 0">
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmitSignup()">
+          <label>
+            <input
+              type="text"
+              formControlName="username"
+              [disabled]="formDisable">
+            Username
+          </label>
+          <label>
+            <input
+              type="email"
+              formControlName="email"
+              [disabled]="formDisable">
+            Email
+          </label>
+          <label>
+            <input
+              type="password"
+              formControlName="password"
+              [disabled]="formDisable">
+            Password
+          </label>
+          <label>
+            <input
+              type="text"
+              formControlName="first_name"
+              [disabled]="formDisable">
+            First name
+          </label>
+          <label>
+            <input type="text"
+                   formControlName="last_name"
+                   [disabled]="formDisable">
+            Last name
+          </label>
+          <input type="submit" [disabled]="!signupForm.valid || formDisable">
+        </form>
+      </div>
+
+      <div
+        *ngIf="authService.inProgress !== 0"
+        class="col-md-12">
+        <h1 style="text-align: center; vertical-align: middle; height: 300px;">
+          Loading...
+        </h1>
+      </div>
+
+    </div>
+
+  </div>
+</div>

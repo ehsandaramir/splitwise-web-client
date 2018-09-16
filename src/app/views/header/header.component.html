@@ -1,0 +1,35 @@
+
+<nav class="navbar navbar-default">
+  <div class="container">
+
+    <div class="navbar-header">
+      <a class="navbar-brand app-theme app-nav-brand" href="/">SPLIT WISE</a>
+    </div>
+
+    <ul class="nav navbar-nav">
+      <li
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}">
+        <a routerLink="/">Dashboard</a>
+      </li>
+      <li
+        routerLinkActive="active">
+        <a routerLink="/invite">Invite</a>
+      </li>
+      <li
+        routerLinkActive="active">
+        <a routerLink="/logout">Logout</a>
+      </li>
+    </ul>
+
+    <ul class="navbar-right">
+      <li
+        *ngIf="authService.userData"
+        routerLinkActive="active">
+        <a routerLink="/profile">{{ authService.userData.username }}</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<br>

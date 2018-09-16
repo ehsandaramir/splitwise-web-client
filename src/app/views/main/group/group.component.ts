@@ -22,4 +22,8 @@ export class GroupComponent implements OnInit {
   clearActiveBill() {
     this.activeBillId = null;
   }
+
+  onReloadBills() {
+    console.log(this.groupService.list());
+  }
 }

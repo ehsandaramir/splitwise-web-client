@@ -4,7 +4,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from './views/header/header.component';
 import { FriendsComponent } from './views/main/features/friends/friends.component';
 import { GroupsComponent } from './views/main/features/groups/groups.component';
 import { ActionComponent } from './views/main/features/action/action.component';
@@ -15,9 +15,23 @@ import { BillEditComponent } from './views/bill-edit/bill-edit.component';
 import { GroupEditComponent } from './views/group-edit/group-edit.component';
 import { ProfileComponent } from './views/profile/profile.component';
 import { InviteComponent } from './views/invite/invite.component';
-import {UserService} from './services/user.service';
-import {BillService} from './services/bill.service';
-import {GroupService} from './services/group.service';
+import { UserService } from './services/user.service';
+import { BillService } from './services/bill.service';
+import { GroupService } from './services/group.service';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthComponent } from './views/auth/auth.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from './services/auth.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CookieService } from 'angular2-cookie/core';
+import { LogoutComponent } from './views/logout/logout.component';
+
+const appRoutes: Routes = [
+  {path: '', component: MainComponent},
+  {path: 'invite', component: InviteComponent},
+  {path: 'login', component: AuthComponent},
+  {path: 'logout', component: LogoutComponent},
+];
 
 @NgModule({
   declarations: [
@@ -32,15 +46,26 @@ import {GroupService} from './services/group.service';
     BillEditComponent,
     GroupEditComponent,
     ProfileComponent,
-    InviteComponent
+    InviteComponent,
+    AuthComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     BrowserAnimationsModule,
+    RouterModule.forRoot(appRoutes),
     MatButtonModule,
     MatCheckboxModule
   ],
-  providers: [UserService, BillService, GroupService],
+  providers: [
+    CookieService,
+    UserService,
+    BillService,
+    GroupService,
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

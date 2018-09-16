@@ -1,16 +1,24 @@
-import { Component } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {UserService} from './services/user.service';
 import {BillService} from './services/bill.service';
 import {GroupService} from './services/group.service';
+import {AuthService} from './services/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [UserService, BillService, GroupService]
+  encapsulation: ViewEncapsulation.None
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'SplitClient';
 
-  constructor(public userService: UserService, public billService: BillService, public groupService: GroupService) {  }
+  constructor(private router: Router
+  ) {
+  }
+
+  ngOnInit() {
+    this.router.navigate(['/login']);
+  }
 }

@@ -1,0 +1,24 @@
+
+.app-theme {
+  color: #5f74ff;
+}
+
+.app-user-username {
+  color: #39ffa0;
+  font-weight: bold;
+}
+
+.app-datetime {
+  color: red;
+  font-style: italic;
+}
+
+.mat-icon {
+  vertical-align: middle;
+}
+
+.app-btn-badge {
+  border: 1px solid blue;
+  border-radius: 5px;
+  padding: 2px;
+}

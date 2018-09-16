@@ -1,7 +1,7 @@
 import {GroupModel} from '../models/group.model';
 
 export class GroupService {
-  groups: GroupModel[] = [];
+  groups: {} = {};
   public selectedGroup: GroupModel;
 
   constructor() {
@@ -26,15 +26,23 @@ export class GroupService {
       ]
     );
 
-    this.groups.push(group1, group2);
+    this.groups[group1.id] = group1;
+    this.groups[group2.id] = group2;
   }
 
   list() {
-    return this.groups;
+    const target = [];
+    for (const key in this.groups) {
+      target.push(this.groups[key]);
+    }
+    return target;
   }
 
-  retrieve(id: number) {
-    let target;
-    this.groups.forEach(element => target = element.id === id ? element : null);
+  retrieve(id: number): GroupModel {
+    return this.groups[id];
+  }
+
+  update(group: GroupModel) {
+    this.groups[group.id] = group;
   }
 }

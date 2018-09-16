@@ -15,7 +15,33 @@ export class UserService {
     return Object.values(this.users);
   }
 
+  create(user: UserModel) {
+    if (user.id in this.users) {
+      console.error('creating an existing user!');
+      console.error(user);
+      return;
+    }
+    this.users[user.id] = user;
+  }
+
   retrieve(id: number) {
     return this.users[id];
+  }
+
+  update(user: UserModel) {
+    if (!(user.id in this.users)) {
+      console.error('updating non-exist element');
+      console.error(user);
+      return;
+    }
+    this.users[user.id] = user;
+  }
+
+  delete(id: number) {
+    if (!(id in this.users)) {
+      console.error('deleting non-exist element: ' + id);
+      return;
+    }
+    delete this.users[id];
   }
 }
