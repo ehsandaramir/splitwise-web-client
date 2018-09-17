@@ -1,5 +1,27 @@
 
-<h1>{{ dataService.selectedGroup.title }}</h1>
+<div class="panel panel-primary">
+
+  <div class="panel-heading">
+    <h3>sss{{ dataService.selectedGroup.title }}</h3>
+  </div>
+
+  <div class="panel-body">
+    <table class="table table-hover">
+
+      <thead></thead>
+
+      <tbody>
+      <tr *ngFor="let user of dataService.selectedGroup.users">
+        <td>
+          {{ user.username }}
+        </td>
+      </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+</div>
 
 <table class="table table-hover">
 
@@ -8,7 +30,7 @@
   <tbody>
     <tr *ngFor="let bill of dataService.selectedGroup.bills" (click)="setActiveBill(bill)">
       <td>
-        <app-bill [billId]="bill" [isActive]="bill === activeBillId" (reloadGroup)="onReloadBills()"></app-bill>
+        <app-bill [billId]="bill" [isActive]="false" (reloadGroup)="onReloadBills()"></app-bill>
       </td>
     </tr>
   </tbody>

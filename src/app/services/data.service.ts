@@ -1,6 +1,6 @@
 import {AuthService} from './auth.service';
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {GroupModel} from '../models/group.model';
 import {UserModel} from '../models/user.model';
 import {BillModel} from '../models/bill.model';
@@ -14,6 +14,8 @@ export class DataService {
   public selectedGroup: GroupModel;
   public selectedUser: UserModel;
   public selectedBill: BillModel;
+
+  public onGroupMessage = new EventEmitter<{type: string, message: string}>();
 
   constructor(private authService: AuthService, private httpClient: HttpClient) {
     this.fetch();
@@ -78,12 +80,47 @@ export class DataService {
     return target;
   }
 
+  createGroup(group: GroupModel) {
+    if (group.pk in this.groups) {
+      this.updateGroup(group);
+    } else {
+      this.httpClient.post<GroupModel>(
+        'http://localhost:8000/api/groups/',
+        {
+          headers: this.authService.getHeader()
+        }
+      ).subscribe(
+        (data: GroupModel) => {
+          this.onGroupMessage.emit({type: 'success', message: 'group created successfully'});
+          },
+        (err) => {
+          this.onGroupMessage.emit({type: 'danger', message: 'group creation failed'});
+        });
+    }
+  }
+
   retrieveGroup(pk: number): GroupModel {
     return this.groups[pk];
   }
 
   updateGroup(group: GroupModel) {
-    this.groups[group.pk] = group;
+    if (group.pk in this.groups) {
+      this.httpClient.put<GroupModel>(
+        'http://localhost:8000/api/groups/' + group.pk + '/',
+        {
+          headers: this.authService.getHeader()
+        }
+      ).subscribe(
+        (data: GroupModel) => {
+          this.onGroupMessage.emit({type: 'success', message: 'group updated successfully'});
+        },
+        (err) => {
+          this.onGroupMessage.emit({type: 'danger', message: 'group update failed'});
+        }
+      );
+    } else {
+      this.createGroup(group);
+    }
   }
 
 
@@ -110,5 +147,9 @@ export class DataService {
 
   retrieveBill(pk: number): BillModel {
     return this.bills[pk];
+  }
+
+  deleteBill(pk: number) {
+
   }
 }

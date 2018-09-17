@@ -1,7 +1,5 @@
 import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
-import {BillService} from '../../../../services/bill.service';
 import {BillModel} from '../../../../models/bill.model';
-import {UserService} from '../../../../services/user.service';
 import {DateVisualClass} from '../../../../helper/date-visual.class';
 import {DataService} from '../../../../services/data.service';
 
@@ -18,7 +16,7 @@ export class BillComponent implements OnInit {
   currentBill: BillModel;
   edit = false;
 
-  constructor(public dataService: DataService, public billService: BillService) {  }
+  constructor(public dataService: DataService) {  }
 
   ngOnInit() {
   }
@@ -26,7 +24,7 @@ export class BillComponent implements OnInit {
   @Input()
   set billId(id: number) {
     this._billId = id;
-    this.currentBill = this.billService.retrieve(id);
+    this.currentBill = this.dataService.retrieveBill(id);
   }
 
   getCreatedDate(): string {
@@ -56,7 +54,7 @@ export class BillComponent implements OnInit {
     if (tag === 'delete' && !this.edit) {
       console.log('delete bill');
       console.log(this.currentBill);
-      this.billService.delete(this.currentBill.pk);
+      this.dataService.deleteBill(this.currentBill.pk);
       this.reloadGroup.emit();
       return;
     }
