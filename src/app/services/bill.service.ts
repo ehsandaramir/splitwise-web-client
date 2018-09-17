@@ -21,8 +21,8 @@ export class BillService {
       new DebtModel(1, 12.34)
     ]);
 
-    this.bills[bill1.id] = bill1;
-    this.bills[bill2.id] = bill2;
+    this.bills[bill1.pk] = bill1;
+    this.bills[bill2.pk] = bill2;
   }
 
   list(): BillModel[] {
@@ -35,12 +35,12 @@ export class BillService {
   }
 
   create(bill: BillModel): void {
-    if (bill.id in this.bills) {
+    if (bill.pk in this.bills) {
       console.error('creating an existing bill!');
       console.error(bill);
       return;
     }
-    this.bills[bill.id] = bill;
+    this.bills[bill.pk] = bill;
   }
 
   retrieve(id: number): BillModel {
@@ -48,12 +48,12 @@ export class BillService {
   }
 
   update(bill: BillModel): void {
-    if (!(bill.id in this.bills)) {
+    if (!(bill.pk in this.bills)) {
       console.error('updating non-exist element');
       console.error(bill);
       return;
     }
-    this.bills[bill.id] = bill;
+    this.bills[bill.pk] = bill;
   }
 
   delete(id: number): void {

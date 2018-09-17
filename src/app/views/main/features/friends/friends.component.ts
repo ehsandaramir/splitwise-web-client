@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from '../../../../services/user.service';
+import {DataService} from '../../../../services/data.service';
 
 @Component({
   selector: 'app-friends',
@@ -8,12 +8,12 @@ import {UserService} from '../../../../services/user.service';
 })
 export class FriendsComponent implements OnInit {
 
-  constructor(public userService: UserService) { }
+  constructor(public dataService: DataService) { }
 
   ngOnInit() {
   }
 
   onUserSelect(user) {
-    this.userService.selectedUser = user;
+    this.dataService.selectedUser = user;
   }
 }

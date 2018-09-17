@@ -48,6 +48,17 @@ export class AuthService {
     );
   }
 
+  getHeader() {
+    const token = this.cookieService.get('auth-token');
+    if (token === '') {
+      this.validateToken();
+    }
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Token ' + token
+    });
+  }
+
   login(loginData: {username: string, password: string}) {
     this.inProgress++;
     const headerLogin = new HttpHeaders({

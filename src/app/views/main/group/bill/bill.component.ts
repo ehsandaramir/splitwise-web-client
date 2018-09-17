@@ -3,7 +3,7 @@ import {BillService} from '../../../../services/bill.service';
 import {BillModel} from '../../../../models/bill.model';
 import {UserService} from '../../../../services/user.service';
 import {DateVisualClass} from '../../../../helper/date-visual.class';
-import {GroupService} from '../../../../services/group.service';
+import {DataService} from '../../../../services/data.service';
 
 @Component({
   selector: 'app-bill',
@@ -18,7 +18,7 @@ export class BillComponent implements OnInit {
   currentBill: BillModel;
   edit = false;
 
-  constructor(public userService: UserService, public groupService: GroupService, public billService: BillService) {  }
+  constructor(public dataService: DataService, public billService: BillService) {  }
 
   ngOnInit() {
   }
@@ -56,7 +56,7 @@ export class BillComponent implements OnInit {
     if (tag === 'delete' && !this.edit) {
       console.log('delete bill');
       console.log(this.currentBill);
-      this.billService.delete(this.currentBill.id);
+      this.billService.delete(this.currentBill.pk);
       this.reloadGroup.emit();
       return;
     }

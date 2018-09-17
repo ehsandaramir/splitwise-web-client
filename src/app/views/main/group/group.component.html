@@ -1,12 +1,12 @@
 
-<h1>{{ groupService.selectedGroup.title }}</h1>
+<h1>{{ dataService.selectedGroup.title }}</h1>
 
 <table class="table table-hover">
 
   <thead></thead>
 
   <tbody>
-    <tr *ngFor="let bill of groupService.selectedGroup.bills" (click)="setActiveBill(bill)">
+    <tr *ngFor="let bill of dataService.selectedGroup.bills" (click)="setActiveBill(bill)">
       <td>
         <app-bill [billId]="bill" [isActive]="bill === activeBillId" (reloadGroup)="onReloadBills()"></app-bill>
       </td>

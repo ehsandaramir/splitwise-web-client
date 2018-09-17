@@ -17,7 +17,7 @@ import { ProfileComponent } from './views/profile/profile.component';
 import { InviteComponent } from './views/invite/invite.component';
 import { UserService } from './services/user.service';
 import { BillService } from './services/bill.service';
-import { GroupService } from './services/group.service';
+import { DataService } from './services/data.service';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './views/auth/auth.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -25,6 +25,7 @@ import { AuthService } from './services/auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CookieService } from 'angular2-cookie/core';
 import { LogoutComponent } from './views/logout/logout.component';
+import {AngularTokenModule, AngularTokenOptions} from 'angular-token';
 
 const appRoutes: Routes = [
   {path: '', component: MainComponent},
@@ -61,10 +62,10 @@ const appRoutes: Routes = [
   ],
   providers: [
     CookieService,
+    AuthService,
     UserService,
     BillService,
-    GroupService,
-    AuthService
+    DataService
   ],
   bootstrap: [AppComponent]
 })

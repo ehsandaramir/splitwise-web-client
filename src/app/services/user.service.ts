@@ -7,8 +7,8 @@ export class UserService {
   constructor() {
     const user1 = new UserModel(1, 'ehsandaramir', 'Amir', 'Ehsandar', 'ehsan@g.com');
     const user2 = new UserModel(2, 'gholipour', 'Gholi', 'Pour', 'gholi@g.com');
-    this.users[user1.id] = user1;
-    this.users[user2.id] = user2;
+    this.users[user1.pk] = user1;
+    this.users[user2.pk] = user2;
   }
 
   list() {
@@ -16,12 +16,12 @@ export class UserService {
   }
 
   create(user: UserModel) {
-    if (user.id in this.users) {
+    if (user.pk in this.users) {
       console.error('creating an existing user!');
       console.error(user);
       return;
     }
-    this.users[user.id] = user;
+    this.users[user.pk] = user;
   }
 
   retrieve(id: number) {
@@ -29,12 +29,12 @@ export class UserService {
   }
 
   update(user: UserModel) {
-    if (!(user.id in this.users)) {
+    if (!(user.pk in this.users)) {
       console.error('updating non-exist element');
       console.error(user);
       return;
     }
-    this.users[user.id] = user;
+    this.users[user.pk] = user;
   }
 
   delete(id: number) {

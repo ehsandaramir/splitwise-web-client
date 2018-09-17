@@ -1,7 +1,7 @@
 
 <h2>Friends</h2>
 <ul class="list-group">
-  <li class="list-group-item" *ngFor="let user of userService.list()" (click)="onUserSelect(user)">
+  <li class="list-group-item" *ngFor="let user of dataService.listUser()" (click)="onUserSelect(user)">
     {{ user.username }}
   </li>
 </ul>

@@ -7,7 +7,7 @@
       <h3 class="app-theme">{{ currentBill.title }}</h3>
       <h3 class="app-theme">{{ currentBill.amount }} {{ currentBill.unit }}</h3>
       <h4>created by
-        <span class="app-user-username">{{ userService.retrieve(currentBill.creator).username }}</span> at
+        <span class="app-user-username">{{ dataService.retrieveUser(currentBill.creator).username }}</span> at
         <span class="app-datetime">{{ getCreatedDate() }}</span>
       </h4>
     </div>

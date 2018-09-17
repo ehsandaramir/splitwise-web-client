@@ -10,7 +10,7 @@
     </div>
 
     <div class="col-md-6">
-      <app-group *ngIf="groupService.selectedGroup; else noGroupSelectedMessage"></app-group>
+      <app-group *ngIf="dataService.selectedGroup; else noGroupSelectedMessage"></app-group>
 
       <ng-template #noGroupSelectedMessage>
         <h1>NO GROUP SELECTED!</h1>

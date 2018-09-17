@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {GroupModel} from '../../../../models/group.model';
-import {GroupService} from '../../../../services/group.service';
+import {DataService} from '../../../../services/data.service';
 
 @Component({
   selector: 'app-groups',
@@ -10,13 +10,13 @@ import {GroupService} from '../../../../services/group.service';
 export class GroupsComponent implements OnInit {
   @Output() onItemSelect = new EventEmitter<GroupModel>();
 
-  constructor(public groupService: GroupService) { }
+  constructor(public dataService: DataService) { }
 
   ngOnInit() {  }
 
   selectItem(item: GroupModel) {
     this.onItemSelect.emit(item);
-    this.groupService.selectedGroup = item;
+    this.dataService.selectedGroup = item;
   }
 
 }

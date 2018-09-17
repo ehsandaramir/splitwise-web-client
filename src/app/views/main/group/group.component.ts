@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {GroupModel} from '../../../models/group.model';
-import {GroupService} from '../../../services/group.service';
+import {DataService} from '../../../services/data.service';
 
 @Component({
   selector: 'app-group',
@@ -10,7 +10,7 @@ import {GroupService} from '../../../services/group.service';
 export class GroupComponent implements OnInit {
   public activeBillId: number;
 
-  constructor(public groupService: GroupService) { }
+  constructor(public dataService: DataService) { }
 
   ngOnInit() {
   }
@@ -24,6 +24,6 @@ export class GroupComponent implements OnInit {
   }
 
   onReloadBills() {
-    console.log(this.groupService.list());
+    console.log(this.dataService.listGroup());
   }
 }
