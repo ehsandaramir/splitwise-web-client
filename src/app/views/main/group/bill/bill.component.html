@@ -4,18 +4,18 @@
   <div class="panel panel-default">
 
     <div class="panel-heading">
-      <h3 class="app-theme">{{ currentBill.title }}</h3>
-      <h3 class="app-theme">{{ currentBill.amount }} {{ currentBill.unit }}</h3>
+      <h3 class="app-theme">{{ bill.title }}</h3>
+      <h3 class="app-theme">{{ bill.amount }} {{ bill.unit }}</h3>
       <h4>created by
-        <span class="app-user-username">{{ dataService.retrieveUser(currentBill.creator).username }}</span> at
-        <span class="app-datetime">{{ getCreatedDate() }}</span>
+        <!--<span class="app-user-username">{{ bill.creator.username }}</span> at-->
+        <!--<span class="app-datetime">{{ currentBill.getVisualDate() }}</span>-->
       </h4>
     </div>
 
     <div class="panel-body">
 
       <h4>
-        PAYMENTS ({{ currentBill.getPaymentSum() }})
+        PAYMENTS ({{ bill.getPaymentSum() }})
         <a href="#" class="app-btn-badge">add</a>
       </h4>
       <table class="table table-hover">
@@ -28,7 +28,7 @@
         </thead>
 
         <tbody>
-        <tr *ngFor="let item of currentBill.payments">
+        <tr *ngFor="let item of bill.getPayments()">
           <td>{{ dataService.retrieveUser(item.user).username }}</td>
           <td>{{ item.amount }}</td>
           <td>
@@ -38,7 +38,7 @@
         </tbody>
       </table>
 
-      <h4>DEBTS ({{ currentBill.getDebtSum() }})</h4>
+      <h4>DEBTS ({{ bill.getDebtSum() }})</h4>
       <table class="table table-hover">
         <thead>
         <tr>
@@ -49,7 +49,7 @@
         </thead>
 
         <tbody>
-        <tr *ngFor="let item of currentBill.debts">
+        <tr *ngFor="let item of bill.getDebts()">
           <td>{{ dataService.retrieveUser(item.user).username }}</td>
           <td>{{ item.amount }}</td>
           <td>
@@ -85,5 +85,5 @@
 </div>
 
 <ng-template #billTableRow>
-  <h3 class="app-theme">{{ dataService.retrieveBill(_billId).title }}</h3>
+  <h3 class="app-theme">{{ bill.title }}</h3>
 </ng-template>

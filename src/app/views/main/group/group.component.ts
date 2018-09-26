@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {GroupModel} from '../../../models/group.model';
 import {DataService} from '../../../services/data.service';
+import {BillModel} from '../../../models/bill.model';
 
 @Component({
   selector: 'app-group',
@@ -8,19 +9,19 @@ import {DataService} from '../../../services/data.service';
   styleUrls: ['./group.component.css']
 })
 export class GroupComponent implements OnInit {
-  public activeBillId: number;
+  public activeBill: number;
 
   constructor(public dataService: DataService) { }
 
   ngOnInit() {
   }
 
-  setActiveBill(id: number) {
-    this.activeBillId = id;
+  setActiveBill(bill: number) {
+    this.activeBill = bill;
   }
 
   clearActiveBill() {
-    this.activeBillId = null;
+    this.activeBill = null;
   }
 
   onReloadBills() {

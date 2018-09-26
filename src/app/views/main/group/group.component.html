@@ -2,7 +2,7 @@
 <div class="panel panel-primary">
 
   <div class="panel-heading">
-    <h3>sss{{ dataService.selectedGroup.title }}</h3>
+    <h3>{{ dataService.selectedGroup.title }}</h3>
   </div>
 
   <div class="panel-body">
@@ -28,9 +28,9 @@
   <thead></thead>
 
   <tbody>
-    <tr *ngFor="let bill of dataService.selectedGroup.bills" (click)="setActiveBill(bill)">
+    <tr *ngFor="let bill of dataService.selectedGroup.bills" (click)="setActiveBill(bill.pk)">
       <td>
-        <app-bill [billId]="bill" [isActive]="false" (reloadGroup)="onReloadBills()"></app-bill>
+        <app-bill [currentBill]="bill.pk" [isActive]="activeBill === bill.pk" (reloadGroup)="onReloadBills()"></app-bill>
       </td>
     </tr>
   </tbody>

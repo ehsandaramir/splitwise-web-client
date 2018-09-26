@@ -4,6 +4,7 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {GroupModel} from '../models/group.model';
 import {UserModel} from '../models/user.model';
 import {BillModel} from '../models/bill.model';
+import {BillInterface} from '../interfaces/Bill.interface';
 
 
 @Injectable()
@@ -57,16 +58,25 @@ export class DataService {
       }
     );
 
-    this.httpClient.get<BillModel[]>(
+    this.httpClient.get<BillInterface[]>(
       'http://localhost:8000/api/bills/',
       {
         headers: this.authService.getHeader()
       }
     ).subscribe(
-      (billData: BillModel[]) => {
+      (billData: BillInterface[]) => {
         this.bills = {};
-        billData.forEach((dat: BillModel) => {
-          this.bills[dat.pk] = dat;
+        billData.forEach((dat: BillInterface) => {
+          this.bills[dat.pk] = new BillModel(
+            dat.pk,
+            dat.title,
+            dat.amount,
+            dat.unit,
+            dat.creator,
+            dat.create_date,
+            dat.transactions
+          );
+          console.log(this.bills[dat.pk].getPaymentSum());
         });
       }
     );
@@ -75,7 +85,9 @@ export class DataService {
   listGroup() {
     const target = [];
     for (const key in this.groups) {
-      target.push(this.groups[key]);
+      if (this.groups.hasOwnProperty(key)) {
+        target.push(this.groups[key]);
+      }
     }
     return target;
   }
@@ -127,7 +139,9 @@ export class DataService {
   listUser() {
     const target = [];
     for (const key in this.users) {
-      target.push(this.users[key]);
+      if (this.users.hasOwnProperty(key)) {
+        target.push(this.users[key]);
+      }
     }
     return target;
   }
@@ -140,7 +154,9 @@ export class DataService {
   listBill() {
     const target = [];
     for (const key in this.bills) {
-      target.push(this.bills[key]);
+      if (this.bills.hasOwnProperty(key)) {
+        target.push(this.bills[key]);
+      }
     }
     return target;
   }

@@ -10,11 +10,11 @@ import {DataService} from '../../../../services/data.service';
 })
 export class BillComponent implements OnInit {
   @Input() isActive: boolean;
+  // @Input() currentBill: number;
   @Output() clearActive = new EventEmitter<void>();
   @Output() reloadGroup = new EventEmitter<void>();
-  _billId: number;
-  currentBill: BillModel;
   edit = false;
+  bill: BillModel;
 
   constructor(public dataService: DataService) {  }
 
@@ -22,13 +22,13 @@ export class BillComponent implements OnInit {
   }
 
   @Input()
-  set billId(id: number) {
-    this._billId = id;
-    this.currentBill = this.dataService.retrieveBill(id);
+  set currentBill(value: number) {
+    this.bill = this.dataService.retrieveBill(value);
+    console.log(this.bill);
   }
 
   getCreatedDate(): string {
-    const date = new DateVisualClass(this.currentBill.dateCreated);
+    const date = new DateVisualClass(this.bill.createDate);
     return date.getVisualDateTime();
   }
 
@@ -54,7 +54,7 @@ export class BillComponent implements OnInit {
     if (tag === 'delete' && !this.edit) {
       console.log('delete bill');
       console.log(this.currentBill);
-      this.dataService.deleteBill(this.currentBill.pk);
+      this.dataService.deleteBill(this.currentBill);
       this.reloadGroup.emit();
       return;
     }

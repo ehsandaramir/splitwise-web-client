@@ -1,38 +1,65 @@
 import {PaymentModel} from './payment.model';
 import {DebtModel} from './debt.model';
 import {DateVisualClass} from '../helper/date-visual.class';
+import {UserModel} from './user.model';
+import {TransactionModel} from './transaction.model';
 
 export class BillModel {
-  pk: number;
-  title: string;
-  amount: number;
-  unit: string;
-  creator: number;
-  dateCreated: Date;
-  payments: PaymentModel[];
-  debts: DebtModel[];
 
-  constructor(pk: number, title: string, amount: number, unit: string, creator: number,
-              dateCreated: Date, payments: PaymentModel[], debts: DebtModel[]) {
-    this.pk = pk;
-    this.title = title;
-    this.amount = amount;
-    this.unit = unit;
-    this.creator = creator;
-    this.dateCreated = dateCreated;
-    this.payments = payments;
-    this.debts = debts;
-  }
+  constructor(public pk: number, public title: string, public amount: number, public unit: string, public creator: UserModel,
+              public createDate: Date, public transactions: TransactionModel[]) {  }
 
-  getPaymentSum() {
+  getPaymentSum(): number {
     let amount = 0;
-    this.payments.forEach(element => amount += element.amount);
+    this.transactions.forEach(element => {
+      if (element.direction !== 1) {
+        amount += Number(element.amount);
+      }
+      // if (element.getTransactionValue() >= 0) {
+      //   amount += element.amount;
+      // }
+    });
     return amount;
   }
 
-  getDebtSum() {
+  getPayments(): TransactionModel[] {
+    const trans = [];
+    this.transactions.forEach(element => {
+      if (element.direction !== 1) {
+        trans.push(element);
+      }
+      // if (element.getTransactionValue() >= 0) {
+      //   trans.push(element);
+      // }
+    });
+    return trans;
+  }
+
+  getDebtSum(): number {
     let amount = 0;
-    this.debts.forEach(element => amount += element.amount);
+    this.transactions.forEach(element => {
+      if (element.direction === 1) {
+        amount += Number(element.amount);
+      }
+    });
     return amount;
+  }
+
+  getDebts(): TransactionModel[] {
+    const trans = [];
+    this.transactions.forEach(element => {
+      if (element.direction === 1) {
+        trans.push(element);
+      }
+      // if (element.getTransactionValue() < 0) {
+      //   trans.push(element);
+      // }
+    });
+    return trans;
+  }
+
+  getVisualDate() {
+    const tmp = new DateVisualClass(this.createDate);
+    return tmp.getVisualDateTime();
   }
 }
