@@ -1,6 +1,5 @@
 import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import {BillModel} from '../../../../models/bill.model';
-import {DateVisualClass} from '../../../../helper/date-visual.class';
 import {DataService} from '../../../../services/data.service';
 
 @Component({
@@ -24,12 +23,6 @@ export class BillComponent implements OnInit {
   @Input()
   set currentBill(value: number) {
     this.bill = this.dataService.retrieveBill(value);
-    console.log(this.bill);
-  }
-
-  getCreatedDate(): string {
-    const date = new DateVisualClass(this.bill.createDate);
-    return date.getVisualDateTime();
   }
 
   onEditClick() {
@@ -39,22 +32,22 @@ export class BillComponent implements OnInit {
   onEditFinish(tag: string) {
     if (tag === 'save' && this.edit) {
       console.log('save bill');
-      console.log(this.currentBill);
+      console.log(this.bill);
       this.edit = false;
       this.reloadGroup.emit();
       return;
     }
     if (tag === 'discard' && this.edit) {
       console.log('discard bill');
-      console.log(this.currentBill);
+      console.log(this.bill);
       this.edit = false;
       this.reloadGroup.emit();
       return;
     }
     if (tag === 'delete' && !this.edit) {
       console.log('delete bill');
-      console.log(this.currentBill);
-      this.dataService.deleteBill(this.currentBill);
+      console.log(this.bill);
+      this.dataService.deleteBill(this.bill.pk);
       this.reloadGroup.emit();
       return;
     }

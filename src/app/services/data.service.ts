@@ -4,7 +4,6 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {GroupModel} from '../models/group.model';
 import {UserModel} from '../models/user.model';
 import {BillModel} from '../models/bill.model';
-import {BillInterface} from '../interfaces/Bill.interface';
 
 
 @Injectable()
@@ -58,25 +57,16 @@ export class DataService {
       }
     );
 
-    this.httpClient.get<BillInterface[]>(
+    this.httpClient.get(
       'http://localhost:8000/api/bills/',
       {
         headers: this.authService.getHeader()
       }
     ).subscribe(
-      (billData: BillInterface[]) => {
+      (billData: {}[]) => {
         this.bills = {};
-        billData.forEach((dat: BillInterface) => {
-          this.bills[dat.pk] = new BillModel(
-            dat.pk,
-            dat.title,
-            dat.amount,
-            dat.unit,
-            dat.creator,
-            dat.create_date,
-            dat.transactions
-          );
-          console.log(this.bills[dat.pk].getPaymentSum());
+        billData.forEach((dat: {}) => {
+          this.bills[dat['pk']] = new BillModel(dat);
         });
       }
     );
@@ -166,6 +156,19 @@ export class DataService {
   }
 
   deleteBill(pk: number) {
-
+    this.httpClient.delete(
+      'http://localhost:8000/api/bills/' + pk + '/',
+      {
+        headers: this.authService.getHeader()
+      }
+    ).subscribe(
+      (dat) => {
+        console.log('delete bill successful');
+      },
+      (err) => {
+        console.error('could not delete desired bill');
+        console.error(err);
+      }
+    );
   }
 }

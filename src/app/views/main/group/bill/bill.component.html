@@ -7,8 +7,8 @@
       <h3 class="app-theme">{{ bill.title }}</h3>
       <h3 class="app-theme">{{ bill.amount }} {{ bill.unit }}</h3>
       <h4>created by
-        <!--<span class="app-user-username">{{ bill.creator.username }}</span> at-->
-        <!--<span class="app-datetime">{{ currentBill.getVisualDate() }}</span>-->
+        <span class="app-user-username">{{ bill.creator.username }}</span> at
+        <span class="app-datetime">{{ bill.createDate | date:'medium' }}</span>
       </h4>
     </div>
 
@@ -85,5 +85,6 @@
 </div>
 
 <ng-template #billTableRow>
+  <!--<h3 class="app-theme">{{ bill.title }}</h3>-->
   <h3 class="app-theme">{{ bill.title }}</h3>
 </ng-template>

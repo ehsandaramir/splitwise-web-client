@@ -28,7 +28,7 @@
   <thead></thead>
 
   <tbody>
-    <tr *ngFor="let bill of dataService.selectedGroup.bills" (click)="setActiveBill(bill.pk)">
+    <tr *ngFor="let bill of bills" (click)="setActiveBill(bill.pk)">
       <td>
         <app-bill [currentBill]="bill.pk" [isActive]="activeBill === bill.pk" (reloadGroup)="onReloadBills()"></app-bill>
       </td>

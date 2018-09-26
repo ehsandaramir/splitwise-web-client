@@ -10,8 +10,11 @@ import {BillModel} from '../../../models/bill.model';
 })
 export class GroupComponent implements OnInit {
   public activeBill: number;
+  public bills: BillModel[];
 
-  constructor(public dataService: DataService) { }
+  constructor(public dataService: DataService) {
+    this.bills = this.dataService.selectedGroup.bills;
+  }
 
   ngOnInit() {
   }
@@ -25,6 +28,7 @@ export class GroupComponent implements OnInit {
   }
 
   onReloadBills() {
-    console.log(this.dataService.listGroup());
+    // console.log(this.dataService.listGroup());
+    this.bills = this.dataService.selectedGroup.bills;
   }
 }
