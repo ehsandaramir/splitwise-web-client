@@ -11,14 +11,35 @@ export class BillModel {
   public createDate: Date;
   public transactions: TransactionModel[];
 
-  constructor(rawData: {}) {
-    this.pk = rawData['pk'];
-    this.title = rawData['title'];
-    this.amount = parseFloat(rawData['amount']);
-    this.unit = rawData['unit'];
-    this.creator = rawData['creator'];
-    this.createDate = new Date(rawData['create_date']);
-    this.transactions = rawData['transactions'];
+  constructor(pk: number, title: string, amount: number, unit: string,
+              creator: UserModel, createDate: Date, transactions: TransactionModel[]) {
+    this.pk = pk;
+    this.title = title;
+    this.amount = amount;
+    this.unit = unit;
+    this.creator = creator;
+    this.createDate = createDate;
+    this.transactions = transactions;
+  }
+
+  static billFactory(fromObject: {}): BillModel {
+    return new BillModel(
+      fromObject['pk'],
+      fromObject['title'],
+      parseFloat(fromObject['amount']),
+      fromObject['unit'],
+      UserModel.userFactory(fromObject['creator']),
+      new Date(fromObject['create_date']),
+      TransactionModel.transactionFactory(fromObject['transactions'])
+    );
+  }
+
+  static billFactoryBatch(fromArray): BillModel[] {
+    const values = [];
+    fromArray.forEach((data: {}) => {
+      values.push(this.billFactory(data));
+    });
+    return values;
   }
 
   getPaymentSum(): number {

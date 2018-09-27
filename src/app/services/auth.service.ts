@@ -28,12 +28,12 @@ export class AuthService {
       'Authorization': 'Token ' + token
     });
 
-    this.httpClient.get<UserModel>('http://localhost:8000/api/self/', {
+    this.httpClient.get('http://localhost:8000/api/self/', {
       headers: headerToken
     }).subscribe(
-      (user: UserModel) => {
+      (user: {}) => {
         console.log(user);
-        this.userData = user;
+        this.userData = UserModel.userFactory(user);
         this.cookieService.put('auth-token', token);
         this.inProgress--;
         this.currentStatus = 'login';

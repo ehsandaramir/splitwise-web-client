@@ -23,16 +23,17 @@ export class DataService {
   }
 
   fetch() {
-    this.httpClient.get<GroupModel[]>(
+    this.httpClient.get(
       'http://localhost:8000/api/groups/',
       {
         headers: this.authService.getHeader()
       }
     ).subscribe(
-      (data: GroupModel[]) => {
+      (data) => {
+        const groups = GroupModel.groupFactoryBatch(data);
         this.groups = {};
-        data.forEach((dat: GroupModel) => {
-          this.groups[dat.pk] = dat;
+        groups.forEach((group: GroupModel) => {
+          this.groups[group.pk] = group;
         });
       },
       (err) => {
@@ -40,17 +41,19 @@ export class DataService {
       }
     );
 
-    this.httpClient.get<UserModel[]>(
+    this.httpClient.get(
       'http://localhost:8000/api/users/',
       {
         headers: this.authService.getHeader()
       }
     ).subscribe(
-      (userData: UserModel[]) => {
+      (userData) => {
+        const users = UserModel.userFactoryBatch(userData);
         this.users = {};
-        userData.forEach((dat: UserModel) => {
-          this.users[dat.pk] = dat;
+        users.forEach((user: UserModel) => {
+          this.users[user.pk] = user;
         });
+        // console.log(this.users);
       },
       (err) => {
         console.error(err);
@@ -63,10 +66,11 @@ export class DataService {
         headers: this.authService.getHeader()
       }
     ).subscribe(
-      (billData: {}[]) => {
+      (billData) => {
+        const bills = BillModel.billFactoryBatch(billData);
         this.bills = {};
-        billData.forEach((dat: {}) => {
-          this.bills[dat['pk']] = new BillModel(dat);
+        bills.forEach((bill: BillModel) => {
+          this.bills[bill.pk] = bill;
         });
       }
     );
