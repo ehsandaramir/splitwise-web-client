@@ -16,9 +16,10 @@
 
       <h4>
         PAYMENTS ({{ bill.getPaymentSum() }})
-        <a href="#" class="app-btn-badge">add</a>
+        <a class="app-btn-badge" (click)="onAddPayment()">add</a>
       </h4>
-      <table class="table table-hover">
+
+      <table class="table table-hover" *ngIf="bill.getPayments().length !== 0; else billNoPayments">
         <thead>
         <tr>
           <td>Paid by</td>
@@ -32,14 +33,20 @@
           <td>{{ dataService.retrieveUser(item.user).username }}</td>
           <td>{{ item.amount }}</td>
           <td>
-            <a href="#" class="app-btn-badge">remove</a>
+            <a class="app-btn-badge" (click)="onDeletePayment(dataService.retrieveUser(item.user).pk)">delete</a>
           </td>
         </tr>
         </tbody>
       </table>
 
-      <h4>DEBTS ({{ bill.getDebtSum() }})</h4>
-      <table class="table table-hover">
+      <hr>
+
+      <h4>
+        DEBTS ({{ bill.getDebtSum() }})
+        <a class="app-btn-badge" (click)="onAddDebt()">add</a>
+      </h4>
+
+      <table class="table table-hover" *ngIf="bill.getDebts().length !== 0; else billNoDebts">
         <thead>
         <tr>
           <td>Owed by</td>
@@ -53,7 +60,7 @@
           <td>{{ dataService.retrieveUser(item.user).username }}</td>
           <td>{{ item.amount }}</td>
           <td>
-            <a href="#" class="app-btn-badge">remove</a>
+            <a class="app-btn-badge" (click)="onDeleteDebt(dataService.retrieveUser(item.user).pk)">delete</a>
           </td>
         </tr>
         </tbody>
@@ -85,6 +92,13 @@
 </div>
 
 <ng-template #billTableRow>
-  <!--<h3 class="app-theme">{{ bill.title }}</h3>-->
   <h3 class="app-theme">{{ bill.title }}</h3>
+</ng-template>
+
+<ng-template #billNoPayments>
+  <h4 class="app-theme">No Payments</h4>
+</ng-template>
+
+<ng-template #billNoDebts>
+  <h4 class="app-theme">No Debts</h4>
 </ng-template>

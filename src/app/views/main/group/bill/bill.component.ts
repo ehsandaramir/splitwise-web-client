@@ -53,6 +53,22 @@ export class BillComponent implements OnInit {
     }
   }
 
+  onAddPayment() {
+    console.log('add payment');
+  }
+
+  onAddDebt() {
+    console.log('add debt');
+  }
+
+  onDeletePayment(pk: number) {
+    console.log('delete payment: ' + pk);
+  }
+
+  onDeleteDebt(pk: number) {
+    console.log('delete debt: ' + pk);
+  }
+
   // @HostListener('click')
   // onBillItemClicked(eventData: Event) {
   //   this.billService.setActiveBill(this._billId);
