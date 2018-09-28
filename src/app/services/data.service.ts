@@ -145,7 +145,7 @@ export class DataService {
   }
 
 
-  listBill() {
+  listBill(): BillModel[] {
     const target = [];
     for (const key in this.bills) {
       if (this.bills.hasOwnProperty(key)) {

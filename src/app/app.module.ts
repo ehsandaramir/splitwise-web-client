@@ -23,12 +23,15 @@ import { AuthService } from './services/auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CookieService } from 'angular2-cookie/core';
 import { LogoutComponent } from './views/logout/logout.component';
+import { TransactionEditComponent } from './views/transaction-edit/transaction-edit.component';
+import {EditService} from './services/edit.service';
 
 const appRoutes: Routes = [
   {path: '', component: MainComponent},
   {path: 'invite', component: InviteComponent},
   {path: 'login', component: AuthComponent},
   {path: 'logout', component: LogoutComponent},
+  {path: 'edit/transaction', component: TransactionEditComponent},
 ];
 
 @NgModule({
@@ -46,7 +49,8 @@ const appRoutes: Routes = [
     ProfileComponent,
     InviteComponent,
     AuthComponent,
-    LogoutComponent
+    LogoutComponent,
+    TransactionEditComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +64,8 @@ const appRoutes: Routes = [
   providers: [
     CookieService,
     AuthService,
-    DataService
+    DataService,
+    EditService
   ],
   bootstrap: [AppComponent]
 })

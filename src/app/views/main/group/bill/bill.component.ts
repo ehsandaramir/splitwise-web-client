@@ -1,6 +1,8 @@
 import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import {BillModel} from '../../../../models/bill.model';
 import {DataService} from '../../../../services/data.service';
+import {EditService} from '../../../../services/edit.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-bill',
@@ -9,13 +11,12 @@ import {DataService} from '../../../../services/data.service';
 })
 export class BillComponent implements OnInit {
   @Input() isActive: boolean;
-  // @Input() currentBill: number;
   @Output() clearActive = new EventEmitter<void>();
   @Output() reloadGroup = new EventEmitter<void>();
   edit = false;
   bill: BillModel;
 
-  constructor(public dataService: DataService) {  }
+  constructor(public dataService: DataService, private editService: EditService) {  }
 
   ngOnInit() {
   }
@@ -54,7 +55,7 @@ export class BillComponent implements OnInit {
   }
 
   onAddPayment() {
-    console.log('add payment');
+    this.editService.editTransaction(this.bill, undefined, ['/']);
   }
 
   onAddDebt() {
