@@ -41,4 +41,8 @@ export class EditService {
     this.previousPath = currentRoute;
     this.router.navigate(['/edit', 'transaction']);
   }
+
+  editTransactionFinished() {
+    this.router.navigate(this.previousPath);
+  }
 }

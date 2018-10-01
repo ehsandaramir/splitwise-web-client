@@ -20,8 +20,8 @@ export class TransactionModel {
       parseInt(rawData['pk'], 10),
       parseFloat(rawData['amount']),
       parseInt(rawData['direction'], 10),
-      parseInt(rawData['user'], 10),
-      rawData['bill']
+      parseInt(rawData['user__read'], 10),
+      rawData['bill__read']
     );
   }
 
@@ -39,5 +39,5 @@ export class TransactionModel {
       value = -value;
     }
     return value;
-}
+  }
 }

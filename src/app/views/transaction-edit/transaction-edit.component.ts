@@ -44,12 +44,20 @@ export class TransactionEditComponent implements OnInit {
 
   onSubmit() {
     console.log(this.transactionForm.value);
-    // this.dataService.createTransaction(
-    //   new TransactionModel
-    // );
+    this.dataService.createTransaction(
+      new TransactionModel(
+        0,
+        parseFloat(this.transactionForm.value['amount']),
+        parseInt(this.transactionForm.value['direction'], 10),
+        parseInt(this.transactionForm.value['user'], 10),
+        this.transactionForm.value['bill']
+      )
+    );
+    this.editService.editTransactionFinished();
   }
 
   onDiscard() {
     console.log('discard');
+    this.editService.editTransactionFinished();
   }
 }

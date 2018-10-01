@@ -178,11 +178,21 @@ export class DataService {
   }
 
   createTransaction(transaction: TransactionModel) {
+    console.log(JSON.stringify(transaction));
+
     this.httpClient.post(
-      'http://localhost:8000/api/transaction/',
+      'http://localhost:8000/api/transactions/',
       JSON.stringify(transaction),
       {
         headers: this.authService.getHeader()
+      }
+    ).subscribe(
+      (data) => {
+        console.log('create transaction successful');
+        console.log(data);
+      },
+      (err) => {
+        console.error('create transaction failed');
       }
     );
   }
