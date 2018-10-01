@@ -4,7 +4,8 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {DataService} from '../../services/data.service';
 import {BillModel} from '../../models/bill.model';
 import {UserModel} from '../../models/user.model';
-import {stringify} from 'querystring';
+import {TransactionModel} from '../../models/transaction.model';
+
 
 @Component({
   selector: 'app-transaction-edit',
@@ -43,6 +44,9 @@ export class TransactionEditComponent implements OnInit {
 
   onSubmit() {
     console.log(this.transactionForm.value);
+    // this.dataService.createTransaction(
+    //   new TransactionModel
+    // );
   }
 
   onDiscard() {

@@ -4,6 +4,7 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {GroupModel} from '../models/group.model';
 import {UserModel} from '../models/user.model';
 import {BillModel} from '../models/bill.model';
+import {TransactionModel} from '../models/transaction.model';
 
 
 @Injectable()
@@ -172,6 +173,16 @@ export class DataService {
       (err) => {
         console.error('could not delete desired bill');
         console.error(err);
+      }
+    );
+  }
+
+  createTransaction(transaction: TransactionModel) {
+    this.httpClient.post(
+      'http://localhost:8000/api/transaction/',
+      JSON.stringify(transaction),
+      {
+        headers: this.authService.getHeader()
       }
     );
   }

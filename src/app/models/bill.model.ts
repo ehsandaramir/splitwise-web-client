@@ -30,7 +30,7 @@ export class BillModel {
       fromObject['unit'],
       UserModel.userFactory(fromObject['creator']),
       new Date(fromObject['create_date']),
-      TransactionModel.transactionFactory(fromObject['transactions'])
+      TransactionModel.transactionFactoryBatch(fromObject['transactions'])
     );
   }
 

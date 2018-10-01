@@ -6,18 +6,29 @@ export class TransactionModel {
   public user: number;
   public bill: string;
 
-  constructor(rawData) {
-    this.pk = rawData['pk'];
-    this.user = parseInt(rawData['user'], 10);
-    this.amount = parseFloat(rawData['amount']);
-    this.direction = parseInt(rawData['direction'], 10);
-    this.bill = rawData['bill'];
+
+  constructor(pk: number, amount: number, direction: number, user: number, bill: string) {
+    this.pk = pk;
+    this.amount = amount;
+    this.direction = direction;
+    this.user = user;
+    this.bill = bill;
   }
 
-  static transactionFactory(rawData): TransactionModel[] {
+  static transactionFactory(rawData): TransactionModel {
+    return new TransactionModel(
+      parseInt(rawData['pk'], 10),
+      parseFloat(rawData['amount']),
+      parseInt(rawData['direction'], 10),
+      parseInt(rawData['user'], 10),
+      rawData['bill']
+    );
+  }
+
+  static transactionFactoryBatch(rawData): TransactionModel[] {
     const trans = [];
     rawData.forEach((data: {}) => {
-      trans.push(new TransactionModel(data));
+      trans.push(this.transactionFactory(data));
     });
     return trans;
   }
