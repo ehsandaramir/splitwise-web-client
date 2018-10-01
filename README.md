@@ -1,5 +1,9 @@
 # SplitClient
 
+[![pipeline status](https://gitlab.com/split_wise/splitwise-angular-client/badges/master/pipeline.svg)](https://gitlab.com/split_wise/splitwise-angular-client/commits/master)
+
+[![coverage report](https://gitlab.com/split_wise/splitwise-angular-client/badges/master/coverage.svg)](https://gitlab.com/split_wise/splitwise-angular-client/commits/master)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.5.
 
 ## Development server
