@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {GroupModel} from '../../../../models/group.model';
 import {DataService} from '../../../../services/data.service';
 
@@ -20,4 +20,5 @@ export class GroupsComponent implements OnInit {
     this.dataService.selectedGroup = item;
   }
 
+  // TODO: add new group func
 }

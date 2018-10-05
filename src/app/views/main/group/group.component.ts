@@ -1,5 +1,4 @@
-import {ChangeDetectorRef, Component, Input, NgZone, OnInit} from '@angular/core';
-import {GroupModel} from '../../../models/group.model';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {DataService} from '../../../services/data.service';
 import {BillModel} from '../../../models/bill.model';
 
@@ -9,16 +8,9 @@ import {BillModel} from '../../../models/bill.model';
   styleUrls: ['./group.component.css']
 })
 export class GroupComponent implements OnInit {
-  public activeBill: number;
-  // public bills: BillModel[];
   private Object = Object;
 
-  static trackBillElement(index: number, element: any) {
-    return element ? element.pk : null;
-  }
-
   constructor(public dataService: DataService, public ref: ChangeDetectorRef) {
-    // this.bills = this.dataService.selectedGroup.bills;
     setInterval(() => { this.ref.markForCheck(); }, 3000);
   }
 
@@ -26,17 +18,12 @@ export class GroupComponent implements OnInit {
   }
 
   setActiveBill(bill: BillModel) {
-    // this.activeBill = bill;
     this.dataService.selectedBill = bill;
   }
 
-  clearActiveBill() {
-    // this.activeBill = null;
+  onReloadBills() {
   }
 
-  onReloadBills() {
-    // this.ref.markForCheck();
-    // console.log(this.dataService.listGroup());
-    // this.bills = this.dataService.selectedGroup.bills;
-  }
+  // TODO: add new bill
+  // TODO: edit group on main page
 }
