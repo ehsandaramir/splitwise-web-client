@@ -28,11 +28,16 @@
   <thead></thead>
 
   <tbody>
-    <tr *ngFor="let bill of bills" (click)="setActiveBill(bill.pk)">
+    <tr *ngFor="let bill of this.dataService.listBill( dataService.selectedGroup.pk ); trackBy: trackBillElement;" (click)="setActiveBill(bill.pk)">
       <td>
         <app-bill [currentBill]="bill.pk" [isActive]="activeBill === bill.pk" (reloadGroup)="onReloadBills()"></app-bill>
       </td>
     </tr>
+    <!--<tr *ngFor="let key of Object.keys(dataService.selectedGroup.bills)" (click)="setActiveBill(dataService.selectedGroup.bills[key].pk)">-->
+      <!--<td>-->
+        <!--<app-bill [currentBill]="dataService.selectedGroup.bills[key].pk" [isActive]="activeBill === dataService.selectedGroup.bills[key].pk" (reloadGroup)="onReloadBills()"></app-bill>-->
+      <!--</td>-->
+    <!--</tr>-->
   </tbody>
 
 </table>

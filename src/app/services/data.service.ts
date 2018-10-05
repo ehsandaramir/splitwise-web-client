@@ -14,7 +14,7 @@ export class DataService {
   public bills: {} = {};
   public selectedGroup: GroupModel;
   public selectedUser: UserModel;
-  public selectedBill: BillModel;
+  // public selectedBill: BillModel;
 
   public onGroupMessage = new EventEmitter<{type: string, message: string}>();
 
@@ -32,6 +32,10 @@ export class DataService {
     ).subscribe(
       (data) => {
         const groups = GroupModel.groupFactoryBatch(data);
+
+        for (const key of Object.keys(this.groups)) {
+          delete this.groups[key];
+        }
         this.groups = {};
         groups.forEach((group: GroupModel) => {
           this.groups[group.pk] = group;
@@ -39,6 +43,7 @@ export class DataService {
       },
       (err) => {
         console.error('could not update group database');
+        console.error(err);
       }
     );
 
@@ -69,10 +74,15 @@ export class DataService {
     ).subscribe(
       (billData) => {
         const bills = BillModel.billFactoryBatch(billData);
+
+        for (const key of Object.keys(this.bills)) {
+          delete this.bills[key];
+        }
         this.bills = {};
         bills.forEach((bill: BillModel) => {
           this.bills[bill.pk] = bill;
         });
+        console.log(Object.keys(this.bills).length);
       }
     );
   }
@@ -98,10 +108,12 @@ export class DataService {
         }
       ).subscribe(
         (data: GroupModel) => {
+          this.selectedGroup = GroupModel.groupFactory(data);
           this.onGroupMessage.emit({type: 'success', message: 'group created successfully'});
           },
         (err) => {
           this.onGroupMessage.emit({type: 'danger', message: 'group creation failed'});
+          console.error(err);
         });
     }
   }
@@ -119,9 +131,11 @@ export class DataService {
         }
       ).subscribe(
         (data: GroupModel) => {
+          this.selectedGroup = this.groups[ data['pk'] ];
           this.onGroupMessage.emit({type: 'success', message: 'group updated successfully'});
         },
         (err) => {
+          console.error(err);
           this.onGroupMessage.emit({type: 'danger', message: 'group update failed'});
         }
       );
@@ -145,12 +159,29 @@ export class DataService {
     return this.users[pk];
   }
 
+  // listBill(): BillModel[] {
+  //   const target = [];
+  //   for (const key in this.bills) {
+  //     if (this.bills.hasOwnProperty(key)) {
+  //       target.push(this.bills[key]);
+  //     }
+  //   }
+  //   return target;
+  // }
 
-  listBill(): BillModel[] {
+  listBill(groupId?: number): BillModel[] {
     const target = [];
-    for (const key in this.bills) {
-      if (this.bills.hasOwnProperty(key)) {
-        target.push(this.bills[key]);
+    if (groupId) {
+      const targetGroup = this.retrieveGroup(groupId);
+      // console.log(targetGroup);
+      for (const key of targetGroup.bills) {
+        target.push(key);
+      }
+    } else {
+      for (const key in this.bills) {
+        if (this.bills.hasOwnProperty(key)) {
+          target.push(this.bills[key]);
+        }
       }
     }
     return target;
@@ -167,8 +198,11 @@ export class DataService {
         headers: this.authService.getHeader()
       }
     ).subscribe(
-      (dat) => {
+      (data) => {
         console.log('delete bill successful');
+        console.log(data);
+        delete this.bills[pk];
+        // console.log(this.bills);
       },
       (err) => {
         console.error('could not delete desired bill');
@@ -193,6 +227,7 @@ export class DataService {
       },
       (err) => {
         console.error('create transaction failed');
+        console.error(err);
       }
     );
   }
