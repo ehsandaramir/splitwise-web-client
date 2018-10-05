@@ -8,14 +8,15 @@ import {DataService} from '../../../../services/data.service';
   styleUrls: ['./groups.component.css']
 })
 export class GroupsComponent implements OnInit {
-  @Output() onItemSelect = new EventEmitter<GroupModel>();
+  @Output() itemSelect = new EventEmitter<GroupModel>();
 
   constructor(public dataService: DataService) { }
 
   ngOnInit() {  }
 
   selectItem(item: GroupModel) {
-    this.onItemSelect.emit(item);
+    this.itemSelect.emit(item);
+    this.dataService.selectedBill = undefined;
     this.dataService.selectedGroup = item;
   }
 

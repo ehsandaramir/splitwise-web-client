@@ -25,12 +25,13 @@ export class GroupComponent implements OnInit {
   ngOnInit() {
   }
 
-  setActiveBill(bill: number) {
-    this.activeBill = bill;
+  setActiveBill(bill: BillModel) {
+    // this.activeBill = bill;
+    this.dataService.selectedBill = bill;
   }
 
   clearActiveBill() {
-    this.activeBill = null;
+    // this.activeBill = null;
   }
 
   onReloadBills() {

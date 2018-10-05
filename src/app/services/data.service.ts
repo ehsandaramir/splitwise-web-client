@@ -14,7 +14,7 @@ export class DataService {
   public bills: {} = {};
   public selectedGroup: GroupModel;
   public selectedUser: UserModel;
-  // public selectedBill: BillModel;
+  public selectedBill: BillModel;
 
   public onGroupMessage = new EventEmitter<{type: string, message: string}>();
 
