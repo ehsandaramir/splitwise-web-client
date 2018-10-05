@@ -1,8 +1,7 @@
-import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BillModel} from '../../../../models/bill.model';
 import {DataService} from '../../../../services/data.service';
 import {EditService} from '../../../../services/edit.service';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-bill',
@@ -59,7 +58,7 @@ export class BillComponent implements OnInit {
   }
 
   onAddDebt() {
-    console.log('add debt');
+    this.editService.editTransaction(this.bill, undefined, ['/']);
   }
 
   onDeletePayment(pk: number) {
@@ -69,6 +68,9 @@ export class BillComponent implements OnInit {
   onDeleteDebt(pk: number) {
     console.log('delete debt: ' + pk);
   }
+
+  // TODO: edit bill on the page
+  // TODO: delete transaction func
 
   // @HostListener('click')
   // onBillItemClicked(eventData: Event) {

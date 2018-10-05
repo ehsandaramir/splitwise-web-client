@@ -18,6 +18,7 @@ export class TransactionEditComponent implements OnInit {
   public listItemsUser: UserModel[];
   public listItemsBill: BillModel[];
 
+  // TODO: fix problem with .0 numbers
   static isFloat(control: FormControl): {[s: string]: boolean} {
     const value = parseFloat(control.value);
     if (isNaN(value)) {

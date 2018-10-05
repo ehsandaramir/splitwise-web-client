@@ -1,5 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {GroupModel} from '../../../models/group.model';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {DataService} from '../../../services/data.service';
 import {BillModel} from '../../../models/bill.model';
 
@@ -9,26 +8,22 @@ import {BillModel} from '../../../models/bill.model';
   styleUrls: ['./group.component.css']
 })
 export class GroupComponent implements OnInit {
-  public activeBill: number;
-  public bills: BillModel[];
+  private Object = Object;
 
-  constructor(public dataService: DataService) {
-    this.bills = this.dataService.selectedGroup.bills;
+  constructor(public dataService: DataService, public ref: ChangeDetectorRef) {
+    setInterval(() => { this.ref.markForCheck(); }, 3000);
   }
 
   ngOnInit() {
   }
 
-  setActiveBill(bill: number) {
-    this.activeBill = bill;
-  }
-
-  clearActiveBill() {
-    this.activeBill = null;
+  setActiveBill(bill: BillModel) {
+    this.dataService.selectedBill = bill;
   }
 
   onReloadBills() {
-    // console.log(this.dataService.listGroup());
-    this.bills = this.dataService.selectedGroup.bills;
   }
+
+  // TODO: add new bill
+  // TODO: edit group on main page
 }
