@@ -2,10 +2,10 @@
 <ul class="list-group">
   <li class="list-group-item">
     <div class="btn-group-vertical" style="width: 100%;">
-      <button type="button" class="btn btn-default action-item" (click)="onItemClick.emit('dash')">Dashboard</button>
-      <button type="button" class="btn btn-default action-item" (click)="onItemClick.emit('total')">Total Balance</button>
-      <button type="button" class="btn btn-default action-item" (click)="onItemClick.emit('group')">New Group</button>
-      <button type="button" class="btn btn-default action-item" (click)="onItemClick.emit('invite')">Invite Friends</button>
+      <button type="button" class="btn btn-default action-item" (click)="itemClick.emit('dash')">Dashboard</button>
+      <button type="button" class="btn btn-default action-item" (click)="itemClick.emit('total')">Total Balance</button>
+      <button type="button" class="btn btn-default action-item" (click)="clickNewGroup()">New Group</button>
+      <button type="button" class="btn btn-default action-item" (click)="itemClick.emit('invite')">Invite Friends</button>
     </div>
   </li>
 </ul>

@@ -32,6 +32,7 @@ const appRoutes: Routes = [
   {path: 'login', component: AuthComponent},
   {path: 'logout', component: LogoutComponent},
   {path: 'edit/transaction', component: TransactionEditComponent},
+  {path: 'edit/group', component: GroupEditComponent},
 ];
 
 @NgModule({

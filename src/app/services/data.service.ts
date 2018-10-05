@@ -5,6 +5,7 @@ import {GroupModel} from '../models/group.model';
 import {UserModel} from '../models/user.model';
 import {BillModel} from '../models/bill.model';
 import {TransactionModel} from '../models/transaction.model';
+import {CloneTools} from '../extra/clone.tools';
 
 
 @Injectable()
@@ -82,7 +83,7 @@ export class DataService {
         bills.forEach((bill: BillModel) => {
           this.bills[bill.pk] = bill;
         });
-        console.log(Object.keys(this.bills).length);
+        // console.log(Object.keys(this.bills).length);
       }
     );
   }
@@ -97,25 +98,22 @@ export class DataService {
     return target;
   }
 
-  createGroup(group: GroupModel) {
-    if (group.pk in this.groups) {
-      this.updateGroup(group);
-    } else {
-      this.httpClient.post<GroupModel>(
-        'http://localhost:8000/api/groups/',
-        {
-          headers: this.authService.getHeader()
-        }
-      ).subscribe(
-        (data: GroupModel) => {
-          this.selectedGroup = GroupModel.groupFactory(data);
-          this.onGroupMessage.emit({type: 'success', message: 'group created successfully'});
-          },
-        (err) => {
-          this.onGroupMessage.emit({type: 'danger', message: 'group creation failed'});
-          console.error(err);
-        });
-    }
+  createGroup(group: {title: string, users: number[]}) {
+    this.httpClient.post<GroupModel>(
+      'http://localhost:8000/api/groups/',
+      JSON.stringify(group),
+      {
+        headers: this.authService.getHeader()
+      }
+    ).subscribe(
+      (data: GroupModel) => {
+        this.selectedGroup = GroupModel.groupFactory(data);
+        this.onGroupMessage.emit({type: 'success', message: 'group created successfully'});
+        },
+      (err) => {
+        this.onGroupMessage.emit({type: 'danger', message: 'group creation failed'});
+        console.error(err);
+      });
   }
 
   retrieveGroup(pk: number): GroupModel {
@@ -123,27 +121,22 @@ export class DataService {
   }
 
   updateGroup(group: GroupModel) {
-    if (group.pk in this.groups) {
-      this.httpClient.put<GroupModel>(
-        'http://localhost:8000/api/groups/' + group.pk + '/',
-        {
-          headers: this.authService.getHeader()
-        }
-      ).subscribe(
-        (data: GroupModel) => {
-          this.selectedGroup = this.groups[ data['pk'] ];
-          this.onGroupMessage.emit({type: 'success', message: 'group updated successfully'});
-        },
-        (err) => {
-          console.error(err);
-          this.onGroupMessage.emit({type: 'danger', message: 'group update failed'});
-        }
-      );
-    } else {
-      this.createGroup(group);
-    }
+    this.httpClient.put<GroupModel>(
+      'http://localhost:8000/api/groups/' + group.pk + '/',
+      {
+        headers: this.authService.getHeader()
+      }
+    ).subscribe(
+      (data: GroupModel) => {
+        this.selectedGroup = this.groups[ data['pk'] ];
+        this.onGroupMessage.emit({type: 'success', message: 'group updated successfully'});
+      },
+      (err) => {
+        console.error(err);
+        this.onGroupMessage.emit({type: 'danger', message: 'group update failed'});
+      }
+    );
   }
-
 
   listUser() {
     const target = [];
@@ -152,7 +145,7 @@ export class DataService {
         target.push(this.users[key]);
       }
     }
-    return target;
+    return CloneTools.clone(target);
   }
 
   retrieveUser(pk: number): UserModel {

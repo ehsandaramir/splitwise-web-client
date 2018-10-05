@@ -1,4 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {EditService} from '../../../../services/edit.service';
+import {GroupModel} from '../../../../models/group.model';
 
 @Component({
   selector: 'app-action',
@@ -6,11 +8,14 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
   styleUrls: ['./action.component.css']
 })
 export class ActionComponent implements OnInit {
-  @Output() onItemClick = new EventEmitter<string>();
+  @Output() itemClick = new EventEmitter<string>();
 
-  constructor() { }
+  constructor(public editService: EditService) { }
 
   ngOnInit() {
   }
 
+  clickNewGroup() {
+    this.editService.editGroup(undefined, ['/']);
+  }
 }

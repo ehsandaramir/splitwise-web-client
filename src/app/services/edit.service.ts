@@ -3,9 +3,17 @@ import {Router} from '@angular/router';
 import {DataService} from './data.service';
 import {TransactionModel} from '../models/transaction.model';
 import {BillModel} from '../models/bill.model';
+import {GroupModel} from '../models/group.model';
 
 @Injectable()
 export class EditService {
+  get group(): GroupModel {
+    return this._group;
+  }
+
+  set group(value: GroupModel) {
+    this._group = value;
+  }
   get bill(): BillModel {
     return this._bill;
   }
@@ -29,11 +37,22 @@ export class EditService {
     this._previousPath = value;
   }
 
+  private _group: GroupModel;
   private _bill: BillModel;
   private _transaction: TransactionModel;
   private _previousPath: [string];
 
   constructor(public dataService: DataService, public router: Router) { }
+
+  editGroup(group: GroupModel, currentRoute: [string]) {
+    this.group = group;
+    this.previousPath = currentRoute;
+    this.router.navigate(['/edit', 'group']);
+  }
+
+  editGroupFinished() {
+    this.router.navigate(this.previousPath);
+  }
 
   editTransaction(bill: BillModel, transaction: TransactionModel, currentRoute: [string]) {
     this.bill = bill;

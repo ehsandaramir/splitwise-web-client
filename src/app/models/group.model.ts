@@ -21,7 +21,7 @@ export class GroupModel {
       fromObject['pk'],
       fromObject['title'],
       new Date(fromObject['date_created']),
-      UserModel.userFactoryBatch(fromObject['users']),
+      UserModel.userFactoryBatch(fromObject['users__read']),
       BillModel.billFactoryBatch(fromObject['bills'])
     );
   }
@@ -33,4 +33,13 @@ export class GroupModel {
     });
     return values;
   }
+
+  static serialize(fromObject: GroupModel): string {
+    const buffer = {};
+    buffer['title'] = fromObject.title;
+    buffer['users'] = fromObject.users;
+    return JSON.stringify(buffer);
+  }
+
+  static serializeBatch(fromArray) { }
 }
