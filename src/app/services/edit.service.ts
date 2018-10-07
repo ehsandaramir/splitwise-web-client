@@ -54,10 +54,15 @@ export class EditService {
     this.editFinished();
   }
 
-  editBill(bill: BillModel, currentRoute: [string]) {
+  editBill(group: GroupModel, bill: BillModel, currentRoute: [string]) {
+    this.group = group;
     this.bill = bill;
     this.previousPath = currentRoute;
     this.router.navigate(['/edit', 'bill']);
+  }
+
+  editBillFinished() {
+    this.editFinished();
   }
 
   editTransaction(bill: BillModel, transaction: TransactionModel, currentRoute: [string]) {

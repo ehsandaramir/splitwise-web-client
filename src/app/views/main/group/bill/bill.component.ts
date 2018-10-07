@@ -15,14 +15,14 @@ export class BillComponent implements OnInit {
   edit = false;
   bill: BillModel;
 
-  constructor(public dataService: DataService, private editService: EditService) {  }
+  constructor(public dataService: DataService, private editService: EditService) { }
 
   ngOnInit() {
   }
 
   @Input()
-  set currentBill(value: number) {
-    this.bill = this.dataService.retrieveBill(value);
+  set currentBill(value: BillModel) {
+    this.bill = value;
   }
 
   onEditClick() {

@@ -28,7 +28,7 @@ export class GroupComponent implements OnInit {
   // TODO: add new bill
   onAddBillClicked() {
     console.log('add bill clicked');
-    this.editService.editBill(null, ['/']);
+    this.editService.editBill(this.dataService.selectedGroup, null, ['/']);
   }
 
   onDeleteGroupClicked() {

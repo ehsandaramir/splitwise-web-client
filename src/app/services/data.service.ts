@@ -169,16 +169,6 @@ export class DataService {
     return this.users[pk];
   }
 
-  // listBill(): BillModel[] {
-  //   const target = [];
-  //   for (const key in this.bills) {
-  //     if (this.bills.hasOwnProperty(key)) {
-  //       target.push(this.bills[key]);
-  //     }
-  //   }
-  //   return target;
-  // }
-
   listBill(groupId?: number): BillModel[] {
     const target = [];
     if (groupId) {
@@ -195,6 +185,25 @@ export class DataService {
       }
     }
     return target;
+  }
+
+  createBill(bill: {group__write: number, title: string, amount: string}) {
+    this.httpClient.post(
+      'http://localhost:8000/api/bills/',
+      JSON.stringify(bill),
+      {
+        headers: this.authService.getHeader()
+      }
+    ).subscribe(
+      (data) => {
+        console.log('create bill sucessful');
+        console.log(data);
+    },
+      (err) => {
+        console.error('create bill failed');
+        console.error(err);
+      }
+    );
   }
 
   retrieveBill(pk: number): BillModel {

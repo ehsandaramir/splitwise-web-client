@@ -1,8 +1,10 @@
 
-<div class="btn-group-vertical group-item-container">
-  <button type="button" class="btn btn-default group-item"
-          *ngFor="let group of dataService.listGroup()"
-          (click)="selectItem(group);">
+<div class="btn-group-vertical" style="width: 100%;">
+  <button
+    type="button"
+    class="btn btn-default"
+    *ngFor="let group of dataService.listGroup()"
+    (click)="selectItem(group);">
     {{ group.title }}
   </button>
 </div>
