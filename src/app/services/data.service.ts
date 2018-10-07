@@ -123,6 +123,7 @@ export class DataService {
   updateGroup(group: GroupModel) {
     this.httpClient.put<GroupModel>(
       'http://localhost:8000/api/groups/' + group.pk + '/',
+      JSON.stringify(group),
       {
         headers: this.authService.getHeader()
       }
@@ -134,6 +135,22 @@ export class DataService {
       (err) => {
         console.error(err);
         this.onGroupMessage.emit({type: 'danger', message: 'group update failed'});
+      }
+    );
+  }
+
+  deleteGroup(pk: number) {
+    this.httpClient.delete('http://localhost:8000/api/groups/' + pk + '/',
+      {
+        headers: this.authService.getHeader()
+      }).subscribe(
+      (data) => {
+        console.log('delete group successful: ' + pk);
+        this.selectedGroup = undefined;
+      },
+      (err) => {
+        console.error('could not delete group');
+        console.error(err);
       }
     );
   }

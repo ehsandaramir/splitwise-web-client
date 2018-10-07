@@ -7,7 +7,6 @@
 
   <div class="panel-body">
     <table class="table table-hover">
-
       <thead></thead>
 
       <tbody>
@@ -17,22 +16,35 @@
         </td>
       </tr>
       </tbody>
-
     </table>
 
-    <table class="table table-hover">
+    <div class="btn-group">
+      <button type="button" class="btn btn-success" (click)="onAddBillClicked()">
+        <i class="material-icons mat-icon">add</i> Add Bill
+      </button>
+      <button type="button" class="btn btn-danger" (click)="onDeleteGroupClicked()">
+        <i class="material-icons mat-icon">delete</i> Remove Group
+      </button>
+    </div>
 
-      <thead></thead>
+    <div class="container" style="height: 30px;"></div>
 
-      <tbody>
-      <tr *ngFor="let bill of this.dataService.listBill( dataService.selectedGroup.pk )" (click)="setActiveBill(bill)">
-        <td>
-          <app-bill [currentBill]="bill.pk" [isActive]="dataService.selectedBill && dataService.selectedBill.pk === bill.pk" (reloadGroup)="onReloadBills()"></app-bill>
-        </td>
-      </tr>
-      </tbody>
+    <div *ngIf="this.dataService.listBill( dataService.selectedGroup.pk ).length === 0; else tableBillContainer;">
+      <h3 style="text-align: center;">No Bills</h3>
+    </div>
 
-    </table>
+    <ng-template #tableBillContainer>
+      <table class="table table-hover">
+        <thead></thead>
+        <tbody>
+        <tr *ngFor="let bill of this.dataService.listBill( dataService.selectedGroup.pk )" (click)="setActiveBill(bill)">
+          <td>
+            <app-bill [currentBill]="bill.pk" [isActive]="dataService.selectedBill && dataService.selectedBill.pk === bill.pk" (reloadGroup)="onReloadBills()"></app-bill>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </ng-template>
   </div>
 
 </div>
