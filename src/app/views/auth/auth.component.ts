@@ -60,11 +60,11 @@ export class AuthComponent implements OnInit {
       ),
       'first_name': new FormControl(
         null,
-        [Validators.required, Validators.minLength(8), Validators.maxLength(64)]
+        [Validators.required, Validators.minLength(3), Validators.maxLength(64)]
       ),
       'last_name': new FormControl(
         null,
-        [Validators.required, Validators.minLength(8), Validators.maxLength(64)]
+        [Validators.required, Validators.minLength(3), Validators.maxLength(64)]
       )
     });
   }
@@ -75,8 +75,13 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmitSignup() {
-    console.log(this.signupForm);
+    console.log(this.signupForm.value);
     this.formDisable = true;
+    this.authService.signup({...this.signupForm.value});
+  }
+
+  onSelectChange(changeTo: string) {
+    this.mode = changeTo;
   }
 
 }

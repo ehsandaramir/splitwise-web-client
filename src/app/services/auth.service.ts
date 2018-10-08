@@ -83,6 +83,33 @@ export class AuthService {
     );
   }
 
+  signup(userData: {username: string, email: string, password: string, first_name: string, last_name: string}) {
+    this.inProgress++;
+    const headerSignup = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    userData['profile'] = {};
+
+    this.httpClient.post(
+      'http://localhost:8000/api/users/',
+      userData,
+      {
+        headers: headerSignup
+      }).subscribe(
+      (data) => {
+        console.log('sign up successful');
+        this.login({username: userData.username, password: userData.password});
+        this.inProgress--;
+      },
+      (err) => {
+        console.error('sign up failed');
+        console.error(err);
+        this.inProgress--;
+      }
+    );
+  }
+
   logout() {
     this.cookieService.remove('auth-token');
     this.userData = undefined;
